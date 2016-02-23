@@ -7,10 +7,29 @@
 #Here I create an object of class door
 #That randomly picks one of the doors for you
 #So you don't need to go through that
-onedoor<-structure(sample(1:3,1), class="door")
+pickmeadoor<-structure(sample(1:3,1), class="door")
 #As we can see, the object is class door
-class(onedoor)
+class(pickmeadoor)
 
+
+#Here I create a function that allows for the creation 
+#of objects of class door that are either 1, 2 or 3.
+pick.door<-function(doornumber){
+  if (is.numeric(doornumber) != TRUE | (doornumber %in% 1:3) == FALSE) {
+    return("Please, follow the rules. You can do it. Pick a number from 1 to 3.")}
+  else {
+    class(doornumber)<-"door"
+    return(doornumber)
+  }
+}
+
+#Test
+#Creating object of class door
+mydoor<-pick.door(1)
+class(mydoor)
+
+#And checking what happens when I pick the exit door
+pick.door("exit")
 
 #########################
 #Exercise 2/3
@@ -43,7 +62,7 @@ methods(PlayGame)
 
 
 #Testing
-PlayGame(onedoor)
+PlayGame(mydoor)
 PlayGame(1)
 
 
@@ -73,14 +92,14 @@ new("door", doornumber=4)
 
 
 #Here I set up a new generic from scratch
-setGeneric("PlayGame", function(x){
-  standardGeneric("PlayGame")
+setGeneric("PlayGameS4", function(x){
+  standardGeneric("PlayGameS4")
 })
 
 #And finally I create a method for it
 #What the method does is randomly picking the door with the car
 #And comparing it with the door chosen. It returns a message with the result
-setMethod("PlayGame",
+setMethod("PlayGameS4",
           c(x="door"),
           function(x){
             success<-x@doornumber==sample(1:3,1)
@@ -88,4 +107,4 @@ setMethod("PlayGame",
 })
 
 #And testing it.
-PlayGame(newdoor)
+PlayGameS4(newdoor)
