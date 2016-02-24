@@ -43,7 +43,7 @@ PlayGame.door<-function(d){
   print("Are you ready? Let's open the door.")
   Sys.sleep(2)
   if (success==TRUE){
-    print("You nailed it! Contrats!")
+    print("You nailed it! Congrats!")
   }
   else {
     print("Oooooooooh! Better luck next time.")
@@ -85,7 +85,7 @@ setClass("door",
          })
 
 #So now I create a door object with door number 3
-(newdoor<-new("door", doornumber=3))
+newdoor<-new("door", doornumber=3)
 
 #And when you include a number that is not 1,2,3 the validity function kicks in
 new("door", doornumber=4)
@@ -102,6 +102,7 @@ setGeneric("PlayGameS4", function(x){
 setMethod("PlayGameS4",
           c(x="door"),
           function(x){
+            validObject(x)
             success<-x@doornumber==sample(1:3,1)
             return(ifelse(success==TRUE,"Congrats!","Bad luck."))
 })
